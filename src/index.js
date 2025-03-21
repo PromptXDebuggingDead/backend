@@ -42,7 +42,7 @@ connectDB()
     console.log(`ERROR: Error in mongoDb connecton!!`);
   });
 
-app.use("/api/v1/auth", userRoutes);
+app.use("/api/v1/user", userRoutes);
 
 app.get("/", (req, res) => {
   return res
