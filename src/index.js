@@ -21,7 +21,7 @@ const app = express();
 // Middlewares
 app.use(
   cors({
-    origin: ["http://localhost:5173", "localhost:3000", "192.168.43.143:3000", "talk-a-tive-qnvy.onrender.com"],
+    origin: ["http://localhost:5173", "localhost:3000", "192.168.43.143:3000"],
     credentials: true,
   })
 );
@@ -41,9 +41,9 @@ connectDB()
   .catch((err) => console.error("MongoDB Connection Error", err));
 
 // Define Routes
-app.use("/api/v1/auth", userRoutes);
-app.use("/api/chat/", chatRoutes);
-app.use("/api/message/", messageRoutes);
+app.use("/api/v1/user", userRoutes);
+app.use("/api/v1/chat/", chatRoutes);
+app.use("/api/v1/message/", messageRoutes);
 
 // Deployment Setup
 const __dirname1 = path.resolve();
@@ -63,7 +63,7 @@ app.use(notFound);
 app.use(errorHandler);
 
 // Start Server
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 8001;
 const server = app.listen(port, () => {
   console.log(`Server ⚙️ running on Port ${port}`);
 });
