@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-// import userRoutes from "./routes/user.routes.js";
+import userRoutes from "./routes/user.routes.js";
 const app = express();
 import dotenv from "dotenv";
 import cloudinary from "cloudinary";
@@ -41,6 +41,8 @@ connectDB()
   .catch((err) => {
     console.log(`ERROR: Error in mongoDb connecton!!`);
   });
+
+app.use("/api/v1/auth", userRoutes);
 
 app.get("/", (req, res) => {
   return res
