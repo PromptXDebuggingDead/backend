@@ -54,7 +54,9 @@ if (process.env.NODE_ENV === "production") {
   });
 } else {
   app.get("/", (req, res) => {
-    res.status(200).json({ success: true, message: "Server is running Healthy" });
+    res
+      .status(200)
+      .json({ success: true, message: "Server is running Healthy" });
   });
 }
 
@@ -72,7 +74,11 @@ const server = app.listen(port, () => {
 const io = new Server(server, {
   pingTimeout: 60000,
   cors: {
-    origin: ["http://localhost:3000", "192.168.43.143:3000", "talk-a-tive-qnvy.onrender.com"],
+    origin: [
+      "http://localhost:3000",
+      "192.168.43.143:3000",
+      "talk-a-tive-qnvy.onrender.com",
+    ],
   },
 });
 

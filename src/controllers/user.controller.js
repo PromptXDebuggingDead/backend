@@ -65,21 +65,20 @@ const registerController = async (req, res, next) => {
 
     // Upload the files to cloudinary
 
-    // const avatar = await uploadOnCloudnary(avatarLocalPath);
+    const avatar = await uploadOnCloudnary(avatarLocalPath);
 
-    // if (!avatar) {
-    //   return res.status().json({ success: false, message: "" })(
-    //     400,
-    //     "Avatar file is Required"
-    //   );
-    // }
+    if (!avatar) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Avatar file is Required" });
+    }
 
     const createdUser = await User.create({
       name,
       username,
       email,
       password,
-      // avatar: "",
+      avatar,
     });
 
     const { accessToken, refreshToken } = await generateAccessAndRefereshTokens(

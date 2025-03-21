@@ -7,12 +7,16 @@ const uploadOnCloudnary = async (localFilePath) => {
     }
 
     const result = await cloudinary.uploader.upload(localFilePath, {
-      folder: "lensOpticals",
+      folder: "social",
       resource_type: "auto",
     });
 
-    return result;
+    console.log(result.secure_url);
+
+    return result.secure_url;
   } catch (error) {
+    console.log(error);
+
     return null;
   }
 };
