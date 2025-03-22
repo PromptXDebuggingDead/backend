@@ -25,7 +25,7 @@ const app = express();
 // Middlewares
 app.use(
   cors({
-    origin: ["http://localhost:5173", "localhost:3000", "192.168.43.143:3000"],
+    origin: ["http://localhost:5173", "localhost:3000", "192.168.43.143:3000", "https://glowing-rolypoly-8c3f39.netlify.app"],
     credentials: true,
   })
 );
