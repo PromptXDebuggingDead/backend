@@ -4,16 +4,20 @@ import {
   createPost,
   deletePost,
   getAllPosts,
+  getOverallPosts,
+  getSinglePost,
   likePost,
 } from "../controllers/post.controller.js";
 
 const router = Router();
 
-router.route("/create").post(createPost);
+router.route("/create").post(verifyJWT, createPost);
 router.route("/:id").delete(deletePost);
-router.route("/:id").put(deletePost);
-router.route("community/:community").get(getAllPosts);
+router.route("/single/:id").get(getSinglePost);
+router.route("/community/:community").get(getAllPosts);
 router.route("/:id").get(getAllPosts);
-router.route("/like").put(likePost);
+router.route("/all/data").get(getOverallPosts);
+
+router.route("/like/:id").put(verifyJWT, likePost);
 
 export default router;

@@ -3,6 +3,7 @@ import Post from "../models/post.model.js";
 // Create a new post
 export const createPost = async (req, res) => {
   try {
+    req.body.user = req.user?._id;
     const post = await Post.create(req.body);
 
     if (!post) {
@@ -14,7 +15,7 @@ export const createPost = async (req, res) => {
 
     return res
       .status(201)
-      .json({ success: true, message: "Post Created Successfully" });
+      .json({ success: true, message: "Post Created Successfully", post });
   } catch (error) {
     console.log("Error: ", error);
 
@@ -28,16 +29,16 @@ export const createPost = async (req, res) => {
 export const getSinglePost = async (req, res) => {
   try {
     const { id } = req.params;
-    const post = await Post.findById(id);
+    const post = await Post.findById(id).populate("user", "community");
 
     if (!post) {
-      res.status(404).json({
+      return res.status(404).json({
         success: false,
         message: "No Posts found",
       });
     }
 
-    return res.status(201).json({
+    return res.status(200).json({
       success: true,
       message: "Post Fetched Successfully",
       data: post,
@@ -55,16 +56,43 @@ export const getSinglePost = async (req, res) => {
 export const getAllPosts = async (req, res) => {
   try {
     const { community } = req.params;
-    const posts = await Post.find({ community });
+    const posts = await Post.find({ community }).populate("user", "community");
 
     if (!posts || posts.length == 0) {
-      res.status(404).json({
+      return res.status(404).json({
         success: false,
         message: "No Posts found",
       });
     }
 
-    return res.status(201).json({
+    return res.status(200).json({
+      success: true,
+      message: "Post Fetched Successfully",
+      data: posts,
+    });
+  } catch (error) {
+    console.log("Error: ", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong while fetching Post",
+    });
+  }
+};
+
+export const getOverallPosts = async (req, res) => {
+  try {
+    const posts = await Post.find();
+    console.log("Posyts: ", posts);
+
+    if (!posts || posts.length == 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No Posts found",
+      });
+    }
+
+    return res.status(200).json({
       success: true,
       message: "Post Fetched Successfully",
       data: posts,

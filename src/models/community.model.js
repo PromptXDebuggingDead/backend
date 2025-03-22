@@ -10,6 +10,9 @@ const communitySchema = new Schema(
       type: String,
       required: true,
     },
+    avatar: {
+      type: String,
+    },
     users: [
       {
         type: Schema.Types.ObjectId,
@@ -31,13 +34,7 @@ const communitySchema = new Schema(
       required: true,
     },
     guidelines: [],
-    categories: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Category",
-        required: true,
-      },
-    ],
+    categories: [],
   },
 
   { timestamps: true }
