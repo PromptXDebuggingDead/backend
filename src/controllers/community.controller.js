@@ -362,7 +362,7 @@ export const getCommunitiesByCategories = async (req, res) => {
 export const joinCommunity = async (req, res) => {
   try {
     const { communityId } = req.params;
-    const userId = "67dd5476057cc224e2869e45"; // req.user._id
+    const userId = req.user._id;
 
     if (!mongoose.Types.ObjectId.isValid(communityId)) {
       return res.status(400).json({
